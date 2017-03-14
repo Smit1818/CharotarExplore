@@ -1,10 +1,10 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by harshil on 28-01-2017.
+ * Created by ideapad on 28-01-2017.
  */
 
 public class cached {

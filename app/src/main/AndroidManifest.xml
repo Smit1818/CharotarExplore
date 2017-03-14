@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.harshil.charotarexplore">
+    package="com.example.ideapad.charotarexplore">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,7 +25,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".launch"
+            android:name="com.example.ideapad.charotarexplore.launch"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -43,44 +43,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".signin"
+            android:name="com.example.ideapad.charotarexplore.signin"
             android:label="@string/title_activity_signin"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".signup"
+            android:name="com.example.ideapad.charotarexplore.signup"
             android:label="@string/title_activity_signup"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".home"
+            android:name="com.example.ideapad.charotarexplore.home"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".category"
+            android:name="com.example.ideapad.charotarexplore.category"
             android:label="@string/title_activity_category"
-            android:parentActivityName=".home"
+            android:parentActivityName="com.example.ideapad.charotarexplore.home"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.harshil.charotarexplore.home" />
+                android:value="com.example.ideapad.charotarexplore.home" />
         </activity>
         <activity
-            android:name=".result"
+            android:name="com.example.ideapad.charotarexplore.result"
             android:label="@string/title_activity_result"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".details"
+            android:name="com.example.ideapad.charotarexplore.details"
             android:label="@string/title_activity_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".feedback"
+            android:name="com.example.ideapad.charotarexplore.feedback"
             android:label="@string/title_activity_feedback"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

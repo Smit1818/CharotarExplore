@@ -1,7 +1,7 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 /**
- * Created by harshil on 21-01-2017.
+ * Created by ideapad on 21-01-2017.
  */
 
 import android.content.Intent;
@@ -94,7 +94,7 @@ public class BaseLocationActivity extends AppCompatActivity implements Navigatio
         this.location = location;
         Log.d("Location", this.location.getLatitude() + " | " + this.location.getLongitude());
         Intent intent = new Intent();
-        intent.setAction("com.example.harshil.charotarexplore.android.action.broadcast");
+        intent.setAction("com.example.ideapad.charotarexplore.android.action.broadcast");
         sendBroadcast(intent);
     }
 }

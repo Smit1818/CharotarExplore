@@ -1,4 +1,4 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,34 +30,22 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class signup extends AppCompatActivity {
-    private static final Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,16}");
+public class signin extends AppCompatActivity {
     cached cached = new cached();
-    private EditText name, mobile, passwd, cpasswd;
-    private Button signup;
-    private TextView toIn;
+    private EditText mobile, passwd;
+    private Button signin;
+    private TextView toUp;
     private AlertDialog exitDialog;
-    private String user_name, contact_number, password, country_code;
-    private ProgressDialog signingup;
+    private String contact_number, password;
+    private ProgressDialog signingin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_signin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        name = (EditText) findViewById(R.id.name);
-        name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (name.getError() != null) {
-                    name.setError(null);
-                }
-            }
-        });
         mobile = (EditText) findViewById(R.id.mobile);
         mobile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +56,7 @@ public class signup extends AppCompatActivity {
             }
         });
         passwd = (EditText) findViewById(R.id.passwd);
+        signin = (Button) findViewById(R.id.signin);
         passwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,20 +65,10 @@ public class signup extends AppCompatActivity {
                 }
             }
         });
-        cpasswd = (EditText) findViewById(R.id.cpasswd);
-        cpasswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cpasswd.getError() != null) {
-                    cpasswd.setError(null);
-                }
-            }
-        });
-        signup = (Button) findViewById(R.id.signup);
-        toIn = (TextView) findViewById(R.id.toIn);
+        toUp = (TextView) findViewById(R.id.toUp);
 
         final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        cpasswd.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        passwd.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -100,43 +78,35 @@ public class signup extends AppCompatActivity {
             }
         });
 
-        signingup = new ProgressDialog(signup.this);
-        signingup.setTitle("Signup");
-        signingup.setMessage("Registration in progress...");
-        signingup.setCancelable(false);
-        signup.setOnClickListener(new View.OnClickListener() {
+        signingin = new ProgressDialog(signin.this);
+        signingin.setTitle("Signin");
+        signingin.setMessage("Authentication in progress...");
+        signingin.setCancelable(false);
+        signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (name.getText().toString().equals("")) {
-                    name.setError("Name required.");
-                } else if (mobile.getText().toString().equals("")) {
+                if (mobile.getText().toString().equals("")) {
                     mobile.setError("Mobile number required.");
                 } else if (mobile.getText().toString().length() != 10) {
                     mobile.setError("10 digit number required.");
                 } else if (passwd.getText().toString().equals("")) {
                     passwd.setError("Password required.");
-                } else if (!isPasswordValid(passwd.getText().toString())) {
-                    Toast.makeText(signup.this, "Password must be 8-16 characters long with at least 1 uppercase, 1 lowercase, 1 number and 1 special character in it.", Toast.LENGTH_LONG).show();
-                } else if (!isPasswordMatching(passwd.getText().toString(), cpasswd.getText().toString())) {
-                    cpasswd.setError("Password does not match.");
                 } else {
-                    user_name = name.getText().toString();
                     contact_number = mobile.getText().toString();
                     password = passwd.getText().toString();
-                    country_code = getCountryCode();
-                    signupapi();
+                    signinapi();
                 }
             }
         });
 
-        toIn.setOnClickListener(new View.OnClickListener() {
+        toUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(signup.this, signin.class));
+                startActivity(new Intent(signin.this, signup.class));
             }
         });
 
-        final AlertDialog.Builder exit = new AlertDialog.Builder(signup.this);
+        final AlertDialog.Builder exit = new AlertDialog.Builder(signin.this);
         exit.setTitle("Exit");
         exit.setMessage("Are you sure you want to exit?");
         exit.setPositiveButton("Yes",
@@ -161,46 +131,19 @@ public class signup extends AppCompatActivity {
         exitDialog = exit.create();
     }
 
-    private boolean isPasswordValid(CharSequence s) {
-        return pattern.matcher(s).matches();
-    }
-
-    public boolean isPasswordMatching(String password, String confirmPassword) {
-        Pattern pattern = Pattern.compile(password, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(confirmPassword);
-        if (!matcher.matches()) {
-            return false;
-        }
-        return true;
-    }
-
-    private String getCountryCode() {
-        String country;
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        country = telephonyManager.getSimCountryIso().toUpperCase();
-        String[] codes = getResources().getStringArray(R.array.country_codes);
-        for (int i = 0; i < codes.length; i++) {
-            String[] c = codes[i].split(",");
-            if (c[1].trim().equals(country)) {
-                return c[0];
-            }
-        }
-        return "";
-    }
-
     @Override
     public void onBackPressed() {
         exitDialog.show();
     }
 
-    private void signupapi() {
-        signingup.show();
+    private void signinapi() {
+        signingin.show();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getResources().getString(R.string.link) + "signup";
+        String url = getResources().getString(R.string.link) + "signin";
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                signingup.dismiss();
+                signingin.dismiss();
                 try {
                     JSONObject result = new JSONObject(response);
                     if (result.getString("status").equals("1")) {
@@ -210,9 +153,9 @@ public class signup extends AppCompatActivity {
                         cached.setCountry_code(user_details.getString("country_code"), getApplicationContext());
                         cached.setContact_number(user_details.getString("contact_number"), getApplicationContext());
                         cached.setUser_avatar(user_details.getString("avatar"), getApplicationContext());
-                        startActivity(new Intent(signup.this, home.class));
+                        startActivity(new Intent(signin.this, home.class));
                     } else {
-                        Toast.makeText(signup.this, result.getString("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(signin.this, result.getString("message"), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -222,14 +165,12 @@ public class signup extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("VolleyError", error.toString());
-                signingup.dismiss();
-                Toast.makeText(signup.this, "Something is wrong.", Toast.LENGTH_SHORT).show();
+                signingin.dismiss();
+                Toast.makeText(signin.this, "Something is wrong.", Toast.LENGTH_SHORT).show();
             }
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("name", user_name);
-                MyData.put("country", country_code);
                 MyData.put("number", contact_number);
                 MyData.put("password", password);
                 return MyData;

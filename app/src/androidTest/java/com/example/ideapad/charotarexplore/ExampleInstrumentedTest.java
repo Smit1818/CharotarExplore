@@ -1,4 +1,4 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.harshil.charotarexplore", appContext.getPackageName());
+        assertEquals("com.example.ideapad.charotarexplore", appContext.getPackageName());
     }
 }

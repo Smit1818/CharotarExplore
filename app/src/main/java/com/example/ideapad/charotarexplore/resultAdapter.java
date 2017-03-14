@@ -1,4 +1,4 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 /**
- * Created by harshil on 30-01-2017.
+ * Created by ideapad on 30-01-2017.
  */
 
 public class resultAdapter extends RecyclerView.Adapter<resultAdapter.ViewHolder> {

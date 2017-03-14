@@ -1,7 +1,7 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 /**
- * Created by harshil on 21-01-2017.
+ * Created by ideapad on 21-01-2017.
  */
 
 public class location_details {

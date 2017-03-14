@@ -1,4 +1,4 @@
-package com.example.harshil.charotarexplore;
+package com.example.ideapad.charotarexplore;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;

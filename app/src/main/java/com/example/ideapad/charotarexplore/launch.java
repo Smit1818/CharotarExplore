@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,7 +19,7 @@ import android.widget.ProgressBar;
 
 public class launch extends BaseLocationActivity {
     cached cached = new cached();
-    private static final String BROADCAST = "com.example.harshil.charotarexplore.android.action.broadcast";
+    private static final String BROADCAST = "com.example.ideapad.charotarexplore.android.action.broadcast";
     private ProgressBar loading;
     private LinearLayout sign;
     private AlertDialog internetDialog, locationDialog;
@@ -77,6 +78,7 @@ public class launch extends BaseLocationActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().matches(BROADCAST)) {
+                    Log.d("Status", "Location received");
                     onLocationAvailable();
                 }
             }
